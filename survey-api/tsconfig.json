@@ -3,14 +3,15 @@
     "module": "commonjs",
     "esModuleInterop": true,
     "target": "es6",
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
       "*": ["node_modules/*", "src/types/*"]
-    }
+    },
+    "types": ["node"]
   },
-  "include": ["src/**/*", "scripts/migration/utils/name-to-url.ts"]
+  "include": ["src/**/*", "scripts/**/*"]
 }
