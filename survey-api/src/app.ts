@@ -2,6 +2,7 @@ import express from 'express';
 import compression from 'compression';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import { router } from './api';
 
 export const app = express();
@@ -10,7 +11,7 @@ app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-
+app.use(cors());
 // set
 app.set('port', process.env.PORT || 4000);
 app.set('env', process.env.NODE_ENV || 'development');
