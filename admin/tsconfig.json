@@ -18,7 +18,8 @@
     "noUnusedParameters": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "target": "esnext"
+    "target": "esnext",
+    "strict": false
   },
   "exclude": [
     "node_modules"

@@ -14,7 +14,6 @@ router.get('/employee', async (req, res, next) => {
 });
 
 router.get('/employee/:employeeId', async (req, res, next) => {
-  console.log('route', req.params.employeeId);
   const result = await getDetailEmployee(db, req.params.employeeId);
   res.send(result);
 });

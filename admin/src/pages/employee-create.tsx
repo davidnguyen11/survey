@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { NextPageContext } from 'next'
 
 import { Layout } from '../components/Layout';
-import { getDetailEmployee } from '../utils/api/get-detail-employee';
 import { Employee } from '../models/employee';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -31,14 +29,7 @@ const styles = (theme: Theme) => ({
   }
 });
 
-class EmployeeDetailPage extends React.Component<Props, State> {
-  static getInitialProps(ctx: NextPageContext) {
-    // Get params from URL and return to client
-    return {
-      employeeId: ctx.query.id,
-    };
-  }
-
+class EmployeeNewPage extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
@@ -52,20 +43,9 @@ class EmployeeDetailPage extends React.Component<Props, State> {
     };
   }
 
-  public async componentDidMount() {
-    const { employeeId } = this.props;
-    const result = await getDetailEmployee(employeeId);
-    if (result.status === 'success') {
-      this.setState({
-        employee: result.data,
-      })
-    }
-  }
-
   public render() {
     const { classes } = this.props;
     const { employee } = this.state;
-    const gender = this.getGenderValue(employee.gender, 'forward') as string;
 
     return (
       <Layout>
@@ -110,7 +90,7 @@ class EmployeeDetailPage extends React.Component<Props, State> {
             <FormControl component="fieldset" margin='normal'>
               <FormLabel component="legend">Gender</FormLabel>
               <RadioGroup
-                value={gender}
+                value={this.state.employee.gender}
                 onChange={this.handleChangeRadio}
                 aria-label="gender"
                 name="gender"
@@ -143,25 +123,17 @@ class EmployeeDetailPage extends React.Component<Props, State> {
   }
 
   protected handleChangeRadio = (e) => {
+    const gender = e.target.value === 'male' ? true : false;
     this.setState({
       employee: {
         ...this.state.employee,
-        gender: this.getGenderValue(e.target.value, 'backward') as boolean,
+        gender,
       }
     })
   }
-
-  protected getGenderValue(value, type: 'forward' | 'backward') {
-    switch (type) {
-      case 'forward':
-        return value ? 'male' : 'female';
-      case 'backward':
-        return value === 'male' ? true : false;
-    }
-  }
 }
 
-export default withStyles(styles)(EmployeeDetailPage);
+export default withStyles(styles)(EmployeeNewPage);
 
 interface Props {
   employeeId: string;

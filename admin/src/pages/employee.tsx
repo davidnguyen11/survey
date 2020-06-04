@@ -9,19 +9,23 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit'
 
 import { Layout } from '../components/Layout';
-import { Router } from '../routes';
+import { Router, ROUTES } from '../routes';
 import Typography from '@material-ui/core/Typography';
-import { Toolbar } from '@material-ui/core';
+import { Toolbar, Button } from '@material-ui/core';
 import { Employee } from '../models/employee';
 import { getListEmployees } from '../utils/api/get-list-employees';
 
 const styles = () => ({
   wrapper: {
     margin: '0 auto'
-  }
+  },
+  grow: {
+    flexGrow: 1,
+  },
 });
 
 class EmployeePage extends React.Component<Props, State> {
@@ -42,12 +46,22 @@ class EmployeePage extends React.Component<Props, State> {
   }
 
   public render() {
+    const { classes } = this.props;
+
     return (
       <Layout>
         <Toolbar>
           <Typography variant="h6" id="tableTitle" component="div">
             Employees
           </Typography>
+          <div className={classes.grow} />
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            href={ROUTES.employee.new}
+          >
+            New
+          </Button>
         </Toolbar>
 
         <TableContainer component={Paper}>
@@ -63,25 +77,30 @@ class EmployeePage extends React.Component<Props, State> {
             </TableHead>
 
             <TableBody>
-              {this.state.employees.map((employee) => (
-                <TableRow key={employee.id}>
-                  <TableCell component="th" scope="row">
-                    {employee.id}
-                  </TableCell>
-                  <TableCell align="right">{employee.fullName}</TableCell>
-                  <TableCell align="right">{employee.gender ? 'Male' : 'Female'}</TableCell>
-                  <TableCell align="right">{employee.position}</TableCell>
-                  <TableCell align="right">
-                    <IconButton href={`/employee/${employee.id}`} aria-label="edit">
-                      <EditIcon />
-                    </IconButton>
+              {this.state.employees.map((employee) => {
+                // Build dynamic employee detail URL by replacing ":id" with employee ID
+                const editUrl = ROUTES.employee.detail.replace(':id', employee.id);
 
-                    <IconButton aria-label="delete">
-                      <DeleteIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
+                return (
+                  <TableRow key={employee.id}>
+                    <TableCell component="th" scope="row">
+                      {employee.id}
+                    </TableCell>
+                    <TableCell align="right">{employee.fullName}</TableCell>
+                    <TableCell align="right">{employee.gender ? 'Male' : 'Female'}</TableCell>
+                    <TableCell align="right">{employee.position}</TableCell>
+                    <TableCell align="right">
+                      <IconButton href={editUrl} aria-label="edit">
+                        <EditIcon />
+                      </IconButton>
+
+                      <IconButton aria-label="delete">
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>
@@ -101,6 +120,7 @@ export default Dictionary;
 interface Props {
   classes: {
     wrapper: string;
+    grow: string;
   };
 }
 
