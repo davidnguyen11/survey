@@ -19,7 +19,9 @@ import Radio from '@material-ui/core/Radio';
 import Button from '@material-ui/core/Button';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
+import Snackbar from '@material-ui/core/Snackbar';
 import { ROUTES } from '../routes';
+import { updateEmployee } from '../utils/api/update-employee';
 
 const styles = (theme: Theme) => ({
   wrapper: {
@@ -48,7 +50,8 @@ class EmployeeDetailPage extends React.Component<Props, State> {
         position: '',
         id: null,
         gender: null
-      }
+      },
+      showSnackBar: false
     };
   }
 
@@ -64,7 +67,7 @@ class EmployeeDetailPage extends React.Component<Props, State> {
 
   public render() {
     const { classes } = this.props;
-    const { employee } = this.state;
+    const { employee, showSnackBar } = this.state;
     const gender = this.getGenderValue(employee.gender, 'forward') as string;
 
     return (
@@ -111,15 +114,29 @@ class EmployeeDetailPage extends React.Component<Props, State> {
             </FormControl>
 
             <FormControl fullWidth margin="normal">
-              <Button size="large" color="primary" variant="contained">
+              <Button onClick={this.handleSubmit} size="large" color="primary" variant="contained">
                 Update
               </Button>
             </FormControl>
           </Paper>
         </div>
+
+        <Snackbar
+          open={showSnackBar}
+          onClose={this.handleCloseNotification}
+          autoHideDuration={2000}
+          message="Edit successfully"
+        />
       </Layout>
     );
   }
+
+  protected handleSubmit = async () => {
+    const result = await updateEmployee(this.state.employee);
+    if (result.status === 'success') {
+      this.setState({ showSnackBar: true });
+    }
+  };
 
   protected handleChangeTextField = (fieldName: TextField) => {
     return (e) => {
@@ -149,6 +166,10 @@ class EmployeeDetailPage extends React.Component<Props, State> {
         return value === 'male' ? true : false;
     }
   }
+
+  protected handleCloseNotification = () => {
+    this.setState({ showSnackBar: false });
+  };
 }
 
 export default withStyles(styles)(EmployeeDetailPage);
@@ -162,7 +183,8 @@ interface Props {
 }
 
 interface State {
-  employee?: Employee;
+  employee: Employee;
+  showSnackBar: boolean;
 }
 
 type TextField = 'fullName' | 'position';

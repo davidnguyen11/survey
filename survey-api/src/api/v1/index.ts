@@ -21,18 +21,27 @@ router.get('/employee/:employeeId', async (req, res, next) => {
 router.post('/employee', async (req, res, next) => {
   const employee = req.body;
   const result = await createEmployee(db, employee);
+  if (result.error) {
+    res.status(400);
+  }
   res.send(result);
 });
 
 router.put('/employee', async (req, res, next) => {
   const employee = req.body;
   const result = await updateEmployee(db, employee);
+  if (result.error) {
+    res.status(400);
+  }
   res.send(result);
 });
 
 router.delete('/employee', async (req, res, next) => {
   const employee = req.body;
   const result = await deleteEmployee(db, employee);
+  if (result.error) {
+    res.status(400);
+  }
   res.send(result);
 });
 

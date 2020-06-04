@@ -16,8 +16,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import Button from '@material-ui/core/Button';
 import ArrowBack from '@material-ui/icons/ArrowBack';
+import Snackbar from '@material-ui/core/Snackbar';
 import { IconButton } from '@material-ui/core';
 import { ROUTES } from '../routes';
+import { createEmployee } from '../utils/api/create-employee';
 
 const styles = (theme: Theme) => ({
   wrapper: {
@@ -37,15 +39,18 @@ class EmployeeNewPage extends React.Component<Props, State> {
       employee: {
         fullName: '',
         position: '',
-        id: null,
-        gender: null
-      }
+        id: undefined,
+        gender: true
+      },
+      showSnackBar: false
     };
   }
 
   public render() {
     const { classes } = this.props;
-    const { employee } = this.state;
+    const { employee, showSnackBar } = this.state;
+
+    const gender = employee.gender ? 'male' : 'female';
 
     return (
       <Layout>
@@ -84,27 +89,44 @@ class EmployeeNewPage extends React.Component<Props, State> {
 
             <FormControl component="fieldset" margin="normal">
               <FormLabel component="legend">Gender</FormLabel>
-              <RadioGroup
-                value={this.state.employee.gender}
-                onChange={this.handleChangeRadio}
-                aria-label="gender"
-                name="gender"
-              >
+              <RadioGroup value={gender} onChange={this.handleChangeRadio} aria-label="gender" name="gender">
                 <FormControlLabel value="male" control={<Radio />} label="Male" />
                 <FormControlLabel value="female" control={<Radio />} label="Female" />
               </RadioGroup>
             </FormControl>
 
             <FormControl fullWidth margin="normal">
-              <Button size="large" color="primary" variant="contained">
-                Update
+              <Button onClick={this.handleSubmit} size="large" color="primary" variant="contained">
+                Create
               </Button>
             </FormControl>
           </Paper>
         </div>
+
+        <Snackbar
+          open={showSnackBar}
+          onClose={this.handleCloseNotification}
+          autoHideDuration={2000}
+          message="Add successfully"
+        />
       </Layout>
     );
   }
+
+  protected handleSubmit = async () => {
+    const result = await createEmployee(this.state.employee);
+    if (result.status === 'success') {
+      this.setState({
+        showSnackBar: true,
+        employee: {
+          fullName: '',
+          position: '',
+          id: undefined,
+          gender: undefined
+        }
+      });
+    }
+  };
 
   protected handleChangeTextField = (fieldName: TextField) => {
     return (e) => {
@@ -126,6 +148,12 @@ class EmployeeNewPage extends React.Component<Props, State> {
       }
     });
   };
+
+  protected handleCloseNotification = () => {
+    this.setState({
+      showSnackBar: false
+    });
+  };
 }
 
 export default withStyles(styles)(EmployeeNewPage);
@@ -139,7 +167,8 @@ interface Props {
 }
 
 interface State {
-  employee?: Employee;
+  employee: Employee;
+  showSnackBar: boolean;
 }
 
 type TextField = 'fullName' | 'position';

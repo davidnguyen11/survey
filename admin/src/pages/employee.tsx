@@ -11,13 +11,23 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
+import Snackbar from '@material-ui/core/Snackbar';
 
 import { Layout } from '../components/Layout';
-import { Router, ROUTES } from '../routes';
+import { ROUTES } from '../routes';
 import Typography from '@material-ui/core/Typography';
-import { Toolbar, Button } from '@material-ui/core';
+import {
+  Toolbar,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions
+} from '@material-ui/core';
 import { Employee } from '../models/employee';
 import { getListEmployees } from '../utils/api/get-list-employees';
+import { deleteEmployee } from '../utils/api/delete-employee';
 
 const styles = () => ({
   wrapper: {
@@ -33,7 +43,10 @@ class EmployeePage extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      employees: []
+      employees: [],
+      selectedEmployee: undefined,
+      showDeleteDialog: false,
+      showSnackBar: false
     };
   }
 
@@ -90,7 +103,7 @@ class EmployeePage extends React.Component<Props, State> {
                         <EditIcon />
                       </IconButton>
 
-                      <IconButton aria-label="delete">
+                      <IconButton onClick={this.handleOpenDialog(employee)} aria-label="delete">
                         <DeleteIcon />
                       </IconButton>
                     </TableCell>
@@ -100,12 +113,75 @@ class EmployeePage extends React.Component<Props, State> {
             </TableBody>
           </Table>
         </TableContainer>
+        {this.renderDeleteDialog()}
+        {this.renderNotificationBox()}
       </Layout>
     );
   }
 
-  protected handleBackButtonClick = () => {
-    Router.pushRoute('search');
+  protected renderDeleteDialog() {
+    const { showDeleteDialog, selectedEmployee } = this.state;
+    return (
+      selectedEmployee && (
+        <Dialog open={showDeleteDialog} onClose={this.handleCloseDeleteDialog}>
+          <DialogTitle id="responsive-dialog-title">Confirmation</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure to delete <b>{selectedEmployee.fullName}</b> ?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button autoFocus onClick={this.handleCloseDeleteDialog} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={this.handleOKDelete} color="secondary" autoFocus>
+              OK
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )
+    );
+  }
+
+  protected renderNotificationBox() {
+    return (
+      <Snackbar
+        open={this.state.showSnackBar}
+        onClose={this.handleCloseNotification}
+        autoHideDuration={2000}
+        message="Delete successfully"
+      />
+    );
+  }
+
+  protected handleOKDelete = async () => {
+    const { data, status } = await deleteEmployee(this.state.selectedEmployee);
+
+    if (status === 'success') {
+      console.log(data);
+      this.setState({
+        employees: data,
+        showSnackBar: true,
+        selectedEmployee: undefined
+      });
+    }
+  };
+
+  protected handleOpenDialog = (employee: Employee) => {
+    return () => {
+      this.setState({
+        showDeleteDialog: true,
+        selectedEmployee: employee
+      });
+    };
+  };
+
+  protected handleCloseDeleteDialog = () => {
+    this.setState({ showDeleteDialog: false });
+  };
+
+  protected handleCloseNotification = () => {
+    this.setState({ showSnackBar: false });
   };
 }
 
@@ -122,4 +198,7 @@ interface Props {
 
 interface State {
   employees: Employee[];
+  selectedEmployee?: Employee;
+  showDeleteDialog: boolean;
+  showSnackBar: boolean;
 }
