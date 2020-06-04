@@ -12,7 +12,7 @@
     "serve": "node dist/server.js",
     "build": "tsc",
     "seed": "./.npm-scripts/seed.sh",
-    "prettier": "prettier --write ./"
+    "prettier": "prettier --write '*/**/*.{ts,tsx}'"
   },
   "keywords": [
     "typescript",

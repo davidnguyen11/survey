@@ -1,6 +1,6 @@
-import { APIResponse } from "../../models/response";
-import { Employee } from "../../models/employee";
-import { END_POINT } from "../constants/link";
+import { APIResponse } from '../../models/response';
+import { Employee } from '../../models/employee';
+import { END_POINT } from '../constants/link';
 
 export async function getListEmployees(): Promise<APIResponse<Employee[]>> {
   try {
@@ -10,15 +10,14 @@ export async function getListEmployees(): Promise<APIResponse<Employee[]>> {
 
     return {
       data,
-      status: 'success',
-    }
-
+      status: 'success'
+    };
   } catch (e) {
     return {
       status: 'error',
       error: {
-        message: e.message,
-      },
+        message: e.message
+      }
     };
   }
 }

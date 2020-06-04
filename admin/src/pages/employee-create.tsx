@@ -15,7 +15,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import Button from '@material-ui/core/Button';
-import ArrowBack from '@material-ui/icons/ArrowBack'
+import ArrowBack from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
 import { ROUTES } from '../routes';
 
@@ -25,7 +25,7 @@ const styles = (theme: Theme) => ({
     width: '30%'
   },
   paper: {
-    padding: theme.spacing(3),
+    padding: theme.spacing(3)
   }
 });
 
@@ -38,8 +38,8 @@ class EmployeeNewPage extends React.Component<Props, State> {
         fullName: '',
         position: '',
         id: null,
-        gender: null,
-      },
+        gender: null
+      }
     };
   }
 
@@ -51,12 +51,7 @@ class EmployeeNewPage extends React.Component<Props, State> {
       <Layout>
         <div className={classes.wrapper}>
           <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="back to list of employee"
-              href={ROUTES.employee.list}
-            >
+            <IconButton edge="start" color="inherit" aria-label="back to list of employee" href={ROUTES.employee.list}>
               <ArrowBack />
             </IconButton>
             <Typography variant="h6" id="tableTitle" component="div">
@@ -65,7 +60,7 @@ class EmployeeNewPage extends React.Component<Props, State> {
           </Toolbar>
 
           <Paper className={classes.paper}>
-            <FormControl fullWidth margin='normal'>
+            <FormControl fullWidth margin="normal">
               <FormLabel component="legend">Name</FormLabel>
               <OutlinedInput
                 fullWidth
@@ -76,7 +71,7 @@ class EmployeeNewPage extends React.Component<Props, State> {
               />
             </FormControl>
 
-            <FormControl fullWidth margin='normal'>
+            <FormControl fullWidth margin="normal">
               <FormLabel component="legend">Position</FormLabel>
               <OutlinedInput
                 fullWidth
@@ -87,7 +82,7 @@ class EmployeeNewPage extends React.Component<Props, State> {
               />
             </FormControl>
 
-            <FormControl component="fieldset" margin='normal'>
+            <FormControl component="fieldset" margin="normal">
               <FormLabel component="legend">Gender</FormLabel>
               <RadioGroup
                 value={this.state.employee.gender}
@@ -95,12 +90,12 @@ class EmployeeNewPage extends React.Component<Props, State> {
                 aria-label="gender"
                 name="gender"
               >
-                <FormControlLabel value='male' control={<Radio />} label="Male" />
-                <FormControlLabel value='female' control={<Radio />} label="Female" />
+                <FormControlLabel value="male" control={<Radio />} label="Male" />
+                <FormControlLabel value="female" control={<Radio />} label="Female" />
               </RadioGroup>
             </FormControl>
 
-            <FormControl fullWidth margin='normal'>
+            <FormControl fullWidth margin="normal">
               <Button size="large" color="primary" variant="contained">
                 Update
               </Button>
@@ -116,21 +111,21 @@ class EmployeeNewPage extends React.Component<Props, State> {
       this.setState({
         employee: {
           ...this.state.employee,
-          [fieldName]: e.target.value,
+          [fieldName]: e.target.value
         }
       });
-    }
-  }
+    };
+  };
 
   protected handleChangeRadio = (e) => {
     const gender = e.target.value === 'male' ? true : false;
     this.setState({
       employee: {
         ...this.state.employee,
-        gender,
+        gender
       }
-    })
-  }
+    });
+  };
 }
 
 export default withStyles(styles)(EmployeeNewPage);

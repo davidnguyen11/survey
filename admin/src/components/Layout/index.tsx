@@ -5,7 +5,7 @@ import { Header } from '../Header';
 const styles = (theme: Theme) => ({
   main: {
     padding: theme.spacing(4)
-  },
+  }
 });
 
 export class LayoutComponent extends React.PureComponent<Props> {
@@ -18,9 +18,7 @@ export class LayoutComponent extends React.PureComponent<Props> {
     return (
       <>
         <Header />
-        <div className={classes.main}>
-          {this.props.children}
-        </div>
+        <div className={classes.main}>{this.props.children}</div>
       </>
     );
   }
@@ -39,4 +37,3 @@ interface DataProps {
     main: string;
   };
 }
-

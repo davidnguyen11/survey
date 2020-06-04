@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { NextPageContext } from 'next'
+import { NextPageContext } from 'next';
 
 import { Layout } from '../components/Layout';
 import { getDetailEmployee } from '../utils/api/get-detail-employee';
@@ -17,7 +17,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import Button from '@material-ui/core/Button';
-import ArrowBack from '@material-ui/icons/ArrowBack'
+import ArrowBack from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
 import { ROUTES } from '../routes';
 
@@ -27,7 +27,7 @@ const styles = (theme: Theme) => ({
     width: '30%'
   },
   paper: {
-    padding: theme.spacing(3),
+    padding: theme.spacing(3)
   }
 });
 
@@ -35,7 +35,7 @@ class EmployeeDetailPage extends React.Component<Props, State> {
   static getInitialProps(ctx: NextPageContext) {
     // Get params from URL and return to client
     return {
-      employeeId: ctx.query.id,
+      employeeId: ctx.query.id
     };
   }
 
@@ -47,8 +47,8 @@ class EmployeeDetailPage extends React.Component<Props, State> {
         fullName: '',
         position: '',
         id: null,
-        gender: null,
-      },
+        gender: null
+      }
     };
   }
 
@@ -57,8 +57,8 @@ class EmployeeDetailPage extends React.Component<Props, State> {
     const result = await getDetailEmployee(employeeId);
     if (result.status === 'success') {
       this.setState({
-        employee: result.data,
-      })
+        employee: result.data
+      });
     }
   }
 
@@ -71,12 +71,7 @@ class EmployeeDetailPage extends React.Component<Props, State> {
       <Layout>
         <div className={classes.wrapper}>
           <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="back to list of employee"
-              href={ROUTES.employee.list}
-            >
+            <IconButton edge="start" color="inherit" aria-label="back to list of employee" href={ROUTES.employee.list}>
               <ArrowBack />
             </IconButton>
             <Typography variant="h6" id="tableTitle" component="div">
@@ -85,7 +80,7 @@ class EmployeeDetailPage extends React.Component<Props, State> {
           </Toolbar>
 
           <Paper className={classes.paper}>
-            <FormControl fullWidth margin='normal'>
+            <FormControl fullWidth margin="normal">
               <FormLabel component="legend">Name</FormLabel>
               <OutlinedInput
                 fullWidth
@@ -96,7 +91,7 @@ class EmployeeDetailPage extends React.Component<Props, State> {
               />
             </FormControl>
 
-            <FormControl fullWidth margin='normal'>
+            <FormControl fullWidth margin="normal">
               <FormLabel component="legend">Position</FormLabel>
               <OutlinedInput
                 fullWidth
@@ -107,20 +102,15 @@ class EmployeeDetailPage extends React.Component<Props, State> {
               />
             </FormControl>
 
-            <FormControl component="fieldset" margin='normal'>
+            <FormControl component="fieldset" margin="normal">
               <FormLabel component="legend">Gender</FormLabel>
-              <RadioGroup
-                value={gender}
-                onChange={this.handleChangeRadio}
-                aria-label="gender"
-                name="gender"
-              >
-                <FormControlLabel value='male' control={<Radio />} label="Male" />
-                <FormControlLabel value='female' control={<Radio />} label="Female" />
+              <RadioGroup value={gender} onChange={this.handleChangeRadio} aria-label="gender" name="gender">
+                <FormControlLabel value="male" control={<Radio />} label="Male" />
+                <FormControlLabel value="female" control={<Radio />} label="Female" />
               </RadioGroup>
             </FormControl>
 
-            <FormControl fullWidth margin='normal'>
+            <FormControl fullWidth margin="normal">
               <Button size="large" color="primary" variant="contained">
                 Update
               </Button>
@@ -136,20 +126,20 @@ class EmployeeDetailPage extends React.Component<Props, State> {
       this.setState({
         employee: {
           ...this.state.employee,
-          [fieldName]: e.target.value,
+          [fieldName]: e.target.value
         }
       });
-    }
-  }
+    };
+  };
 
   protected handleChangeRadio = (e) => {
     this.setState({
       employee: {
         ...this.state.employee,
-        gender: this.getGenderValue(e.target.value, 'backward') as boolean,
+        gender: this.getGenderValue(e.target.value, 'backward') as boolean
       }
-    })
-  }
+    });
+  };
 
   protected getGenderValue(value, type: 'forward' | 'backward') {
     switch (type) {

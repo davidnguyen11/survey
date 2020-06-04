@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
-import EditIcon from '@material-ui/icons/Edit'
+import EditIcon from '@material-ui/icons/Edit';
 
 import { Layout } from '../components/Layout';
 import { Router, ROUTES } from '../routes';
@@ -24,8 +24,8 @@ const styles = () => ({
     margin: '0 auto'
   },
   grow: {
-    flexGrow: 1,
-  },
+    flexGrow: 1
+  }
 });
 
 class EmployeePage extends React.Component<Props, State> {
@@ -55,11 +55,7 @@ class EmployeePage extends React.Component<Props, State> {
             Employees
           </Typography>
           <div className={classes.grow} />
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
-            href={ROUTES.employee.new}
-          >
+          <Button variant="contained" startIcon={<AddIcon />} href={ROUTES.employee.new}>
             New
           </Button>
         </Toolbar>
@@ -127,4 +123,3 @@ interface Props {
 interface State {
   employees: Employee[];
 }
-

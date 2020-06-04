@@ -5,8 +5,8 @@ const ROUTES = {
   employee: {
     list: '/employee',
     detail: '/employee/edit/:id',
-    new: '/employee/new',
-  },
+    new: '/employee/new'
+  }
 };
 
 routes.add('index', '/');
@@ -18,4 +18,3 @@ export const Link = routes.Link;
 export const Router = routes.Router;
 export default routes;
 export { ROUTES };
-
