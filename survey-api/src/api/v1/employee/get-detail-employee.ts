@@ -1,11 +1,11 @@
 import { DB, QueryConfig, APIResponse } from '../../../types';
 import { Employee } from '../models/employee';
 
-export async function getEmployees(db: DB, args?: any) {
+export async function getDetailEmployee(db: DB, employeeId: string) {
   const query: QueryConfig = {
     text: `
       SELECT * FROM employee e
-      WHERE e.active = True
+      WHERE e.active = True and e.id = ${employeeId}
     `,
   };
 
@@ -14,8 +14,8 @@ export async function getEmployees(db: DB, args?: any) {
   };
 
   try {
-    const result = await db.query(query);
-    const data = result.rows.map((item: Employee) => {
+    const res = await db.query(query);
+    const data = res.rows.map((item: Employee) => {
       return {
         id: item.id,
         fullName: item.full_name,
@@ -27,7 +27,11 @@ export async function getEmployees(db: DB, args?: any) {
         updatedAt: item.updated_at,
       };
     });
-    response.data = data;
+
+
+    const result = data.length === 1 ? data[0] : null;
+
+    response.data = result;
     response.status = 'success';
   } catch (e) {
     response.status = 'error';

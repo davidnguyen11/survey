@@ -1,7 +1,5 @@
-import { Status } from './status';
-
 export interface APIResponse<T> {
-  status: Status;
+  status: 'fetching' | 'success' | 'error';
   data?: T;
   error?: {
     message: string;

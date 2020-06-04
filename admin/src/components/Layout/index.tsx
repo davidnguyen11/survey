@@ -1,29 +1,42 @@
 import * as React from 'react';
-import { Header, Props as HeaderDataProps } from '../Header';
+import { withStyles, Theme } from '@material-ui/core/styles';
+import { Header } from '../Header';
 
-export class Layout extends React.PureComponent<Props> {
+const styles = (theme: Theme) => ({
+  main: {
+    padding: theme.spacing(4)
+  },
+});
+
+export class LayoutComponent extends React.PureComponent<Props> {
   public static defaultProps = {
     enableHeader: true
   };
 
   public render() {
+    const { classes } = this.props;
     return (
       <>
-        {this.props.enableHeader && this.renderHeader()}
-        {this.props.children}
+        <Header />
+        <div className={classes.main}>
+          {this.props.children}
+        </div>
       </>
     );
   }
-
-  protected renderHeader() {
-    const { enableSearchIcon, onSearchIconClick } = this.props;
-    return <Header onSearchIconClick={onSearchIconClick} enableSearchIcon={enableSearchIcon} />;
-  }
 }
 
-type Props = DataProps & Pick<HeaderDataProps, 'enableSearchIcon' | 'onSearchIconClick'>;
+const Layout = withStyles(styles)(LayoutComponent);
+
+export { Layout };
+
+type Props = DataProps;
 
 interface DataProps {
   enableHeader?: boolean;
   children: React.ReactNode;
+  classes: {
+    main: string;
+  };
 }
+

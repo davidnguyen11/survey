@@ -3,10 +3,8 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 
 import { Theme } from '@material-ui/core/styles';
 
@@ -33,22 +31,10 @@ class HeaderComponent extends React.Component<Props> {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Dictionary
+            Dashboard
           </Typography>
-          {this.renderSearchIcon()}
-          <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
-    );
-  }
-
-  protected renderSearchIcon() {
-    return (
-      this.props.enableSearchIcon && (
-        <IconButton onClick={this.props.onSearchIconClick} type="submit" aria-label="search">
-          <SearchIcon />
-        </IconButton>
-      )
     );
   }
 }
@@ -57,7 +43,7 @@ const Header = withStyles(styles)(HeaderComponent);
 
 export { Header };
 
-export type Props = DataProps & EventProps;
+export type Props = DataProps;
 
 interface DataProps {
   classes: {
@@ -65,9 +51,4 @@ interface DataProps {
     menuButton: string;
     title: string;
   };
-  enableSearchIcon?: boolean;
-}
-
-interface EventProps {
-  onSearchIconClick?: (e: React.MouseEvent) => void;
 }

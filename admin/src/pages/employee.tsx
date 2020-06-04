@@ -7,9 +7,16 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit'
 
 import { Layout } from '../components/Layout';
 import { Router } from '../routes';
+import Typography from '@material-ui/core/Typography';
+import { Toolbar } from '@material-ui/core';
+import { Employee } from '../models/employee';
+import { getListEmployees } from '../utils/api/get-list-employees';
 
 const styles = () => ({
   wrapper: {
@@ -27,18 +34,22 @@ class EmployeePage extends React.Component<Props, State> {
   }
 
   public async componentDidMount() {
-    const res = await fetch('http://localhost:4000/api/v1/employee');
-    const result = await res.json();
-    const { data } = result;
-    this.setState({
-      employees: data
-    });
-    console.log(result);
+    const res = await getListEmployees();
+    const { data: employees, status } = res;
+    if (status === 'success' && employees) {
+      this.setState({ employees });
+    }
   }
 
   public render() {
     return (
-      <Layout onSearchIconClick={this.handleBackButtonClick} enableSearchIcon>
+      <Layout>
+        <Toolbar>
+          <Typography variant="h6" id="tableTitle" component="div">
+            Employees
+          </Typography>
+        </Toolbar>
+
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
             <TableHead>
@@ -47,6 +58,7 @@ class EmployeePage extends React.Component<Props, State> {
                 <TableCell align="right">Full name</TableCell>
                 <TableCell align="right">Gender</TableCell>
                 <TableCell align="right">Position</TableCell>
+                <TableCell align="right">Actions</TableCell>
               </TableRow>
             </TableHead>
 
@@ -59,6 +71,15 @@ class EmployeePage extends React.Component<Props, State> {
                   <TableCell align="right">{employee.fullName}</TableCell>
                   <TableCell align="right">{employee.gender ? 'Male' : 'Female'}</TableCell>
                   <TableCell align="right">{employee.position}</TableCell>
+                  <TableCell align="right">
+                    <IconButton href={`/employee/${employee.id}`} aria-label="edit">
+                      <EditIcon />
+                    </IconButton>
+
+                    <IconButton aria-label="delete">
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -87,9 +108,3 @@ interface State {
   employees: Employee[];
 }
 
-interface Employee {
-  id: number;
-  fullName: string;
-  gender: boolean;
-  position: string;
-}

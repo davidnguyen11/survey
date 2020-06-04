@@ -3,7 +3,7 @@ import { parse } from 'url';
 import next from 'next';
 import routes from '../src/routes';
 
-const port = parseInt(process.env.PORT || '3000', 10);
+const port = parseInt(process.env.PORT || '3001', 10);
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = routes.getRequestHandler(app);
@@ -25,7 +25,7 @@ app.prepare().then(() => {
   // tslint:disable-next-line:no-console
   console.log(
     `> Server listening at http://localhost:${port} as ${
-      dev ? 'development' : process.env.NODE_ENV
+    dev ? 'development' : process.env.NODE_ENV
     }`
   );
 });
