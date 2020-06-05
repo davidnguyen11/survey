@@ -9,10 +9,13 @@ create table employee (
   updated_at timestamptz not null DEFAULT NOW()
 );
 
+create type review_status as ENUM ('done', 'pending');
+
 create table reviewer_reviewee (
   id serial primary key not null,
   reviewer_id integer not null,
   reviewee_id integer not null,
+  status review_status not null DEFAULT 'pending',
   created_at timestamptz not null DEFAULT NOW(),
   updated_at timestamptz not null DEFAULT NOW()
 );

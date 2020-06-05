@@ -78,10 +78,10 @@ class EmployeePage extends React.Component<Props, State> {
             <TableHead>
               <TableRow>
                 <TableCell>ID</TableCell>
-                <TableCell align="right">Full name</TableCell>
-                <TableCell align="right">Gender</TableCell>
-                <TableCell align="right">Position</TableCell>
-                <TableCell align="right">Actions</TableCell>
+                <TableCell align="left">Full name</TableCell>
+                <TableCell align="left">Gender</TableCell>
+                <TableCell align="left">Position</TableCell>
+                <TableCell align="center">Actions</TableCell>
               </TableRow>
             </TableHead>
 
@@ -95,10 +95,10 @@ class EmployeePage extends React.Component<Props, State> {
                     <TableCell component="th" scope="row">
                       {employee.id}
                     </TableCell>
-                    <TableCell align="right">{employee.fullName}</TableCell>
-                    <TableCell align="right">{employee.gender ? 'Male' : 'Female'}</TableCell>
-                    <TableCell align="right">{employee.position}</TableCell>
-                    <TableCell align="right">
+                    <TableCell align="left">{employee.fullName}</TableCell>
+                    <TableCell align="left">{employee.gender ? 'Male' : 'Female'}</TableCell>
+                    <TableCell align="left">{employee.position}</TableCell>
+                    <TableCell align="center">
                       <IconButton href={editUrl} aria-label="edit">
                         <EditIcon />
                       </IconButton>
@@ -158,7 +158,6 @@ class EmployeePage extends React.Component<Props, State> {
     const { data, status } = await deleteEmployee(this.state.selectedEmployee);
 
     if (status === 'success') {
-      console.log(data);
       this.setState({
         employees: data,
         showSnackBar: true,
@@ -185,9 +184,7 @@ class EmployeePage extends React.Component<Props, State> {
   };
 }
 
-const Dictionary = withStyles(styles)(EmployeePage);
-
-export default Dictionary;
+export default withStyles(styles)(EmployeePage);
 
 interface Props {
   classes: {

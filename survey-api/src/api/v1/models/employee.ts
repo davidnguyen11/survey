@@ -8,9 +8,3 @@ export interface Employee {
   created_at: Date;
   updated_at: Date;
 }
-
-export interface InputEmployee {
-  fullName: string;
-  gender: boolean;
-  position: string;
-}

@@ -1,0 +1,27 @@
+[
+  {
+    "content": "He is very kind",
+    "rating": 5,
+    "employee_id": 1
+  },
+  {
+    "content": "This dude is good",
+    "rating": 5,
+    "employee_id": 2
+  },
+  {
+    "content": "Great",
+    "rating": 5,
+    "employee_id": 3
+  },
+  {
+    "content": "Good technical",
+    "rating": 5,
+    "employee_id": 4
+  },
+  {
+    "content": "I like to work with him",
+    "rating": 5,
+    "employee_id": 5
+  }
+]

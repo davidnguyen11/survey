@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Layout } from '../components/Layout';
-import { Logo } from '../components/Logo';
-import Box from '@material-ui/core/Box';
+import { ROUTES } from '../routes';
 
 const styles = () => ({
   wrapper: {
@@ -14,9 +13,14 @@ class IndexPage extends React.Component<Props> {
   public render() {
     return (
       <Layout>
-        <Box pt={5}>
-          <Logo />
-        </Box>
+        <ul>
+          <li>
+            <a href={ROUTES.employee.list}>Employee</a>
+          </li>
+          <li>
+            <a href={ROUTES.performance.list}>Performance</a>
+          </li>
+        </ul>
       </Layout>
     );
   }

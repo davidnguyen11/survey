@@ -5,11 +5,16 @@ import { getDetailEmployee } from './employee/get-detail-employee';
 import { createEmployee } from './employee/create-employee';
 import { updateEmployee } from './employee/update-employee';
 import { deleteEmployee } from './employee/delete-employee';
+import { getPerformances } from './performance/get-list-performance';
 
 const router = express.Router();
 
+// Employee
 router.get('/employee', async (req, res, next) => {
   const result = await getEmployees(db);
+  if (result.error) {
+    res.status(400);
+  }
   res.send(result);
 });
 
@@ -39,6 +44,15 @@ router.put('/employee', async (req, res, next) => {
 router.delete('/employee', async (req, res, next) => {
   const employee = req.body;
   const result = await deleteEmployee(db, employee);
+  if (result.error) {
+    res.status(400);
+  }
+  res.send(result);
+});
+
+// Performance
+router.get('/performance', async (req, res, next) => {
+  const result = await getPerformances(db);
   if (result.error) {
     res.status(400);
   }
