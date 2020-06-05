@@ -9,6 +9,7 @@ export async function createEmployee(db: DB, args: any) {
       INSERT INTO employee(full_name, gender, active, position)
       VALUES($1, $2, $3, $4)
       RETURNING *
+      
     `,
     values: [fullName, gender, true, position],
   };

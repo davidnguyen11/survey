@@ -6,6 +6,7 @@ export async function getEmployees(db: DB, args?: any) {
     text: `
       SELECT * FROM employee e
       WHERE e.active = True
+      ORDER BY e.id DESC
     `,
   };
 
