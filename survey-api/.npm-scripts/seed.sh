@@ -8,3 +8,6 @@ node ./scripts/seed/performance/index.js
 
 echo "Filling data to reviewer_reviewee table"
 node ./scripts/seed/reviewer-reviewee/index.js
+
+echo "Filling data to account table"
+node ./scripts/seed/account/index.js

@@ -13,8 +13,7 @@ create table account (
   id serial primary key not null,
   username varchar(50) not null,
   password varchar(50) not null,
-  employee_id integer not null,
-  active boolean not null DEFAULT False,
+  full_name varchar(255) not null,
   created_at timestamptz not null DEFAULT NOW(),
   updated_at timestamptz not null DEFAULT NOW()
 );
