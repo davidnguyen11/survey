@@ -8,6 +8,7 @@ import { deleteEmployee } from './employee/delete-employee';
 import { getPerformances } from './performance/get-list-performance';
 import { getEmployeePerformances } from './performance/get-employee-list-performance';
 import { getEmployeeReviewees } from './employee/get-employee-reviewees';
+import { addPerformance } from './performance/add-performance';
 
 const router = express.Router();
 
@@ -77,6 +78,15 @@ router.get('/employee/:employeeId/reviewees', async (req, res, next) => {
 // Performance
 router.get('/performance', async (req, res, next) => {
   const result = await getPerformances(db);
+  if (result.error) {
+    res.status(400);
+  }
+  res.send(result);
+});
+
+router.post('/performance', async (req, res, next) => {
+  const args = req.body;
+  const result = await addPerformance(db, args);
   if (result.error) {
     res.status(400);
   }
