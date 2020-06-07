@@ -9,6 +9,7 @@ import { getPerformances } from './performance/get-list-performance';
 import { getEmployeePerformances } from './performance/get-employee-list-performance';
 import { getEmployeeReviewees } from './employee/get-employee-reviewees';
 import { addPerformance } from './performance/add-performance';
+import { login } from './account/login';
 
 const router = express.Router();
 
@@ -87,6 +88,16 @@ router.get('/performance', async (req, res, next) => {
 router.post('/performance', async (req, res, next) => {
   const args = req.body;
   const result = await addPerformance(db, args);
+  if (result.error) {
+    res.status(400);
+  }
+  res.send(result);
+});
+
+// Acount
+router.post('/login', async (req, res, next) => {
+  const args = req.body;
+  const result = await login(db, args);
   if (result.error) {
     res.status(400);
   }

@@ -14,6 +14,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
 import Button from '@material-ui/core/Button';
+import Cookies from 'js-cookie';
 
 const styles = () => ({
   wrapper: {
@@ -31,9 +32,15 @@ class RevieweesPage extends React.Component<Props, State> {
   }
 
   public async componentDidMount() {
-    const { data: reviewees } = await getReviewees('1');
-    if (reviewees) {
-      this.setState({ reviewees });
+    const currentEmployee = Cookies.get('employee');
+    if (currentEmployee) {
+      const employee = JSON.parse(currentEmployee);
+      const { data: reviewees } = await getReviewees(employee.id);
+      if (reviewees) {
+        this.setState({ reviewees });
+      }
+    } else {
+      window.location.href = '/login';
     }
   }
 

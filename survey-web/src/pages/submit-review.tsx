@@ -19,6 +19,7 @@ import ArrowBack from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
 import { addReview } from '../utils/api/add-review';
+import Cookies from 'js-cookie';
 
 const styles = (theme: Theme) => ({
   wrapper: {
@@ -113,10 +114,16 @@ class DetailRevieweePage extends React.Component<Props, State> {
 
   protected handleSubmit = async () => {
     const { employee: reviewee, review } = this.state;
-    const reviewerId = '1';
-    const result = await addReview(reviewee.id, reviewerId, review);
-    if (result.status === 'success') {
-      this.setState({ showSnackBar: true });
+    const currentEmployee = Cookies.get('employee');
+    if (currentEmployee) {
+      const reviewer = JSON.parse(currentEmployee);
+      const reviewerId = reviewer.id;
+      const result = await addReview(reviewee.id, reviewerId, review);
+      if (result.status === 'success') {
+        this.setState({ showSnackBar: true });
+      }
+    } else {
+      window.location.href = '/login';
     }
   };
 

@@ -8,6 +8,7 @@ import { getReviews } from '../utils/api/get-reviews';
 
 import { Performance } from '../models/performance';
 import ListItemText from '@material-ui/core/ListItemText';
+import Cookies from 'js-cookie';
 
 const styles = () => ({
   wrapper: {
@@ -25,9 +26,15 @@ class ReviewPage extends React.Component<Props, State> {
   }
 
   public async componentDidMount() {
-    const { data: performances } = await getReviews('1');
-    if (performances) {
-      this.setState({ performances });
+    const currentEmployee = Cookies.get('employee');
+    if (currentEmployee) {
+      const employee = JSON.parse(currentEmployee);
+      const { data: performances } = await getReviews(employee.id);
+      if (performances) {
+        this.setState({ performances });
+      }
+    } else {
+      window.location.href = '/login';
     }
   }
 

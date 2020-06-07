@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Layout } from '../components/Layout';
+import Cookies from 'js-cookie';
 
 const styles = () => ({
   wrapper: {
@@ -9,6 +10,14 @@ const styles = () => ({
 });
 
 class IndexPage extends React.Component<Props> {
+  public componentDidMount() {
+    // If user is not logged in
+    // redirect to login page
+    if (!Cookies.get('employee')) {
+      window.location.href = '/login';
+    }
+  }
+
   public render() {
     return (
       <Layout>
