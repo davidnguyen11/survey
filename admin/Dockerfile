@@ -1,7 +1,7 @@
 FROM node:10.15.3-alpine as builder
-WORKDIR /survey-api
+WORKDIR /admin
 COPY . ./
 RUN npm install
 RUN npm run build
-EXPOSE 4000
+EXPOSE 3001
 CMD [ "npm", "start" ]

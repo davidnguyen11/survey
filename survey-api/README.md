@@ -1,4 +1,6 @@
-# Graphql Todo API
+# Survey API
+
+Provide API for `admin` & `survey-web`.
 
 - [Getting started](#getting-started)
   - [.env file](#env-file)
@@ -39,15 +41,15 @@ POSTGRES_PORT=54320
 
 ### Database
 
+Using [postgresql](https://www.postgresql.org/) to setup manage database.
+
 To set up database, run:
 
 ```bash
 docker-compose up -d
 ```
 
-### Seeding data
-
-**dump data**
+### Initialize data
 
 To initialize the dump data for a database, run:
 
@@ -68,6 +70,15 @@ npm run dev
 To run on production environment
 
 ```bash
+npm run build
+```
+
+```bash
 npm start
 ```
 
+## Technologies using
+
+- [https://www.typescriptlang.org/](https://www.typescriptlang.org/)
+- [https://expressjs.com/](https://expressjs.com/)
+- [https://www.postgresql.org/](https://www.postgresql.org/)

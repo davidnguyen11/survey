@@ -2,7 +2,7 @@ import express from 'express';
 import next from 'next';
 import routes from '../src/routes';
 
-const port = parseInt(process.env.PORT || '3001', 10);
+const port = 3001;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = routes.getRequestHandler(app);

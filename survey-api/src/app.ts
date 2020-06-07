@@ -13,7 +13,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors());
 // set
-app.set('port', process.env.PORT || 4000);
+const port = 4000;
+app.set('port', port);
 app.set('env', process.env.NODE_ENV || 'development');
 
 // health check

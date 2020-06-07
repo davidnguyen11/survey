@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3002",
     "prettier": "prettier --write '*/**/*.{ts,tsx}'"
   },
   "keywords": [],
