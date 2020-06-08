@@ -34,7 +34,7 @@ export async function login(db: DB, args: any) {
       });
 
       /*
-       * Here we can integrate with "JWT" to response back to user the
+       * We can integrate with "JWT" to response back to user the
        * encode token
        * https://jwt.io/
        */

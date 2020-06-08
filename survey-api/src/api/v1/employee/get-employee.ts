@@ -15,6 +15,9 @@ export async function getEmployees(db: DB, args?: any) {
   };
 
   try {
+    /*
+     * Will support pagination
+     */
     const result = await db.query(query);
     const data = result.rows.map((item: Employee) => {
       return {

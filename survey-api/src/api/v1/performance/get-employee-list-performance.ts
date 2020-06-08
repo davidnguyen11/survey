@@ -16,6 +16,9 @@ export async function getEmployeePerformances(db: DB, employeeId: string) {
   };
 
   try {
+    /*
+     * Will support pagination
+     */
     const result = await db.query(query);
     const data = result.rows.map((item: Performance) => {
       return {

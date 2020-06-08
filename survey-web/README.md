@@ -9,6 +9,16 @@ The survey web app provide employee a tool to see and submit reviews from other 
 - [x] Displaying list of reviewees need to add reviews
 - [x] Submit review for specific reviewee
 
+**Note:** Before using any pages, you need to login. Below is the sample username / password
+
+| username | password |
+| -------- | -------- |
+| david    | david    |
+| dennis   | dennis   |
+| kevin    | kevin    |
+| ben      | ben      |
+| sheng    | sheng    |
+
 ## Development
 
 Make sure the `survey-api` started.
